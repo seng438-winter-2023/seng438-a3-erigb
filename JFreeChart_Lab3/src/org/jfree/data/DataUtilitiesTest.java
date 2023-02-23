@@ -46,12 +46,35 @@ public class DataUtilitiesTest {
 		});
 		double result = DataUtilities.calculateColumnTotal(values, 0);
 		assertEquals("The total for the column containing 2.5 and 7.5 is 10.0", 10.0, result, .000000001d);
-
+	}
+	
+	/***
+	 * This test will test calculateColumnTotal by using a 1 column, 2 row Values2D object with all valid rows.
+	 * Expected output is 10
+	 */
+	@Test
+	public void calculateColumnTotalForTwoValuesWithAllValidRows() {
+		int[] validRows = {0, 1};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(1, 0);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0, validRows);
+		assertEquals("The total for the column containing 2.5 and 7.5 is 10.0", 10.0, result, .000000001d);
 	}
 
 	/***
-	 * This test will check calculateColumnTotal by using a 1 column, 2 row Values2D object.
+	 * This test will check calculateColumnTotal by using a 1 column, 2 row Values2D object with all valid rows.
 	 * This object only contains 0 values.
+	 * It is also run through using all valid rows to test the overriding method.
 	 * Expected output is 0
 	 */
 	@Test
@@ -71,6 +94,30 @@ public class DataUtilitiesTest {
 		double result = DataUtilities.calculateColumnTotal(values, 0);
 		assertEquals(0, result, .000000001d);
 	}
+	
+	/***
+	 * This test will check calculateColumnTotal by using a 1 column, 2 row Values2D object using all valid rows.
+	 * This object only contains 0 values.
+	 * Expected output is 0
+	 */
+	@Test
+	public void calculateColumnTotalReturnsZeroForInvalidValueWithAllValidRows() {
+		int[] validRows = {0, 1};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(0));
+				one(values).getValue(1, 0);
+				will(returnValue(0));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0, validRows);
+		assertEquals(0, result, .000000001d);
+	}
 
 	/***
 	 * This test will test calculateColumnTotal by using an empty Values2D.
@@ -87,6 +134,25 @@ public class DataUtilitiesTest {
 			}
 		});
 		double result = DataUtilities.calculateColumnTotal(values, 0);
+		assertEquals(0, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateColumnTotal by using an empty Values2D using only valid rows.
+	 * Expected output is 0.
+	 */
+	@Test
+	public void calculateColumnTotalReturnsZeroForEmptyValue2DWithAllValidRows() {
+		int[] validRows = {0};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(0));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0, validRows);
 		assertEquals(0, result, .000000001d);
 	}
 	
@@ -113,6 +179,29 @@ public class DataUtilitiesTest {
 	}
 
 	/***
+	 * This test will test calculateRowTotal by using a properly made Values2D using only valid columns.
+	 * Expected output is 10.
+	 */
+	@Test
+	public void calculateRowTotalForTwoValuesWithAllValidColumns() {
+		int[] validCols = {0, 1};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getColumnCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(0, 1);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0, validCols);
+		assertEquals("The total for the row containing 2.5 and 7.5 is 10.0", 10, result, .000000001d);
+	}
+
+	/***
 	 * This test will test calculateRowTotal by using a properly made Values2D with invalid inputs.
 	 * Expected output is 0.
 	 */
@@ -133,6 +222,29 @@ public class DataUtilitiesTest {
 		double result = DataUtilities.calculateRowTotal(values, 0);
 		assertEquals("The total for the row should be 0 with invalid values", 0, result, .000000001d);
 	}
+	
+	/***
+	 * This test will test calculateRowTotal by using a properly made Values2D with invalid inputs using all valid columns
+	 * Expected output is 0.
+	 */
+	@Test
+	public void calculateRowTotalReturnsZeroForInvalidValueWithAllValidColumns() {
+		int[] validCols = {0, 1};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getColumnCount();
+				will(returnValue(1));
+				one(values).getValue(0, 0);
+				will(returnValue(10));
+				one(values).getValue(0, 10);
+				will(throwException(new IndexOutOfBoundsException("Index 10 is out of bound for Column Count of 1")));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0, validCols);
+		assertEquals("The total for the row should be 0 with invalid values", 0, result, .000000001d);
+	}
 
 	/***
 	 * This test will test calculateRowTotal by using an empty Values2D.
@@ -150,6 +262,193 @@ public class DataUtilitiesTest {
 		});
 		double result = DataUtilities.calculateRowTotal(values, 0);
 		assertEquals("The total for the row should be 0 with invalid values", 0, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateRowTotal by using an empty Values2D using only valid columns.
+	 * Expected output is 0.
+	 */
+	@Test
+	public void calculateRowTotalReturnsZeroForEmptyValue2DWithAllValidColumns() {
+		int[] validCols = {0};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getColumnCount();
+				will(returnValue(0));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0, validCols);
+		assertEquals("The total for the row should be 0 with invalid values", 0, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateColumnTotal by using a properly made Values2D with two values using only one valid row.
+	 * Expected output is 7.5.
+	 */
+	@Test
+	public void calculateColumnTotalForTwoValuesWithOneValidRow() {
+		int[] validRows = {0, 5};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(1, 0);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0, validRows);
+		assertEquals("The total for the column using only valid rows is 7.5", 7.5, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateRowTotal by using a properly made Values2D with two values using only one valid row.
+	 * Expected output is 7.5.
+	 */
+	@Test
+	public void calculateRowTotalForTwoValuesWithOneValidRow() {
+		int[] validCols = {0, 5};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getColumnCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(0, 1);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0, validCols);
+		assertEquals("The total for the column using only valid rows is 7.5", 7.5, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateColumnTotal by using a properly made Values2D with a null value.
+	 * Expected output is 7.5.
+	 */
+	@Test
+	public void calculateColumnTotalForTwoValuesWithNullValue() {
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(1, 0);
+				will(returnValue(null));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0);
+		assertEquals("The total for the column using all rows is 7.5", 7.5, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateColumnTotal by using a properly made Values2D with a null value using only valid row.
+	 * Expected output is 7.5.
+	 */
+	@Test
+	public void calculateColumnTotalForTwoValuesWithNullValueWithAllValidRows() {
+		int[] validRows = {0, 1};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(1, 0);
+				will(returnValue(null));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0, validRows);
+		assertEquals("The total for the column using all rows is 7.5", 7.5, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateRowTotal by using a properly made Values2D with a null value.
+	 * Expected output is 7.5.
+	 */
+	@Test
+	public void calculateRowTotalForTwoValuesWithNullValue() {
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getColumnCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(0, 1);
+				will(returnValue(null));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0);
+		assertEquals("The total for the column using only valid rows is 7.5", 7.5, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateRowTotal by using a properly made Values2D with a null value using only valid row.
+	 * Expected output is 7.5.
+	 */
+	@Test
+	public void calculateRowTotalForTwoValuesWithNullValueWithAllValidRows() {
+		int[] validCols = {0, 1};
+		Mockery mockObject = new Mockery();
+		values = mockObject.mock(Values2D.class);
+		mockObject.checking(new Expectations() {
+			{
+				one(values).getColumnCount();
+				will(returnValue(2));
+				one(values).getValue(0, 0);
+				will(returnValue(7.5));
+				one(values).getValue(0, 1);
+				will(returnValue(null));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0, validCols);
+		assertEquals("The total for the column using only valid rows is 7.5", 7.5, result, .000000001d);
+	}
+	
+	/***
+	 * This test will test calculateColumnTotal by using a null Values2D.
+	 * Expected output is IllegalArgumentException.class.
+	 */
+	@Test
+	public void calculateColumnTotalForNullValues() {
+		values = null;
+		try {
+			DataUtilities.calculateColumnTotal(values, 0);
+			fail("An exception should be thrown!");
+		} catch (Exception exception) {
+			assertEquals("The exception thrown type is IllegalArgumentException", IllegalArgumentException.class,
+					exception.getClass());
+		}
+	}
+	
+	/***
+	 * This test will test calculateRowTotal by using a null Values2D.
+	 * Expected output is IllegalArgumentException.class.
+	 */
+	@Test
+	public void calculateRowTotalForNullValues() {
+		values = null;
+		try {
+			DataUtilities.calculateRowTotal(values, 0);
+			fail("An exception should be thrown!");
+		} catch (Exception exception) {
+			assertEquals("The exception thrown type is IllegalArgumentException", IllegalArgumentException.class,
+					exception.getClass());
+		}
 	}
 
 	// the following tests the method getCumulativePercentages in a case where data passed to it had only positive values
