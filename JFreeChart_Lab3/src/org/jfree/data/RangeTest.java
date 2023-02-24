@@ -172,7 +172,7 @@ public class RangeTest {
     }
     
     /**
-     * NEW FOR ASSIGNMENT 3
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
      * This test will test shifting when the lower bound of the range is 0 and zero-crossing is not allowed. 
      * Expected output is a new range from (1, 4)
      */
@@ -181,6 +181,18 @@ public class RangeTest {
     	Range actual = Range.shift(new Range(0, 3), 1.0);
     	assertEquals("The upper bound should be 3+1=4", 4, actual.getUpperBound(), .000000001d);
     	assertEquals("The lower bound should be 0+1=1", 1, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will test shifting when the the lower bound of the range is below 0 and the
+     * delta is large enough that the lower bound will cross 0
+     */
+    @Test
+    public void shiftWithZeroCrossingCrossZero() {
+    	Range actual = Range.shift(exampleRange, 1.5, true);
+    	assertEquals("The upper bound should be 1+1.5=2.5", 2.5, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -1+1.5=0.5", 0.5, actual.getLowerBound(), .000000001d);
     }
     
         /* This test will test the method expandtoInclude where we are passing in a range and the value that must be included.
