@@ -65,7 +65,7 @@ public class RangeTest {
 	 * Expected output is True.
 	 */
     @Test
-    public void intersectsRangeFullyOverlapsSpecifiedRange() {
+    public void intersectsShouldBeTrueWithEqualRange() {
     	assertTrue("The Range (-1, 1) intersects the current range (-1, 1). Contains should return true",
     	exampleRange.intersects(-1, 1));
     }
@@ -75,7 +75,7 @@ public class RangeTest {
 	 * Expected output is True.
 	 */
     @Test
-    public void intersectsRangePartiallyOverlapingSpecifiedRange() {
+    public void intersectsShouldBeTrueWithPartiallyOverlappingUpperRange() {
     	assertTrue("The Range (-1, 1) intersects the current range (0, 2). Contains should return true",
     	exampleRange.intersects(0, 2));
     }
@@ -85,7 +85,7 @@ public class RangeTest {
 	 * Expected output is True.
 	 */
     @Test
-    public void intersectsRangeFullyCoveredBySpecifiedRange() {
+    public void intersectsShouldBeTrueWithFullyOverlappingRange() {
     	assertTrue("The Range (-1, 1) intersects the current range (-5, 5). Contains should return true",
     	exampleRange.intersects(-5, 5));
     }
@@ -95,7 +95,7 @@ public class RangeTest {
 	 * Expected output is True.
 	 */
     @Test
-    public void intersectsSpecifiedRangeFullyCoveredByRange() {
+    public void intersectsShouldBeTrueWithPartiallyOverlappingSmallerRange() {
     	assertTrue("The Range (-1, 1) intersects the current range (0, 1). Contains should return true",
     	exampleRange.intersects(0, 1));
     }
@@ -105,13 +105,32 @@ public class RangeTest {
 	 * Expected output is False.
 	 */
     @Test
-    public void intersectsRangeDoesNotOverlapSpecifiedRange() {
+    public void intersectsShouldBeFalseWithHigherRange() {
     	assertFalse("The Range (-1, 1) does not intersects the current range (-1, 1). Contains should return false",
     	exampleRange.intersects(2, 3));
     }
     
+    /**
+     * NEW FOR ASSIGNMENT 3 (increase branch coverage)
+     * This test will test intersects with a range that is completely below the specified range.
+     * Expected output is false
+     */
+    @Test
+    public void intersectsShouldBeFalseWithLowerRange() {
+    	assertFalse("The Range (-5, -2) does not intersect the current Range (-1, 1).", exampleRange.intersects(-5, -2));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (increase branch coverage)
+     * This test will test intersects returns false when range is within specified range with b0 > b1
+     */
+    @Test
+    public void intersectsShouldBeFalseWithb0BelowUpperAndb0GreaterThanb1() {
+    	assertFalse("The Range (0, -0.5) does not intersect the current Range (-1, 1)", exampleRange.intersects(0, -0.5));
+    }
+    
     /***
-	 * This test will test shifting a range with a positve value for delta that is small enough so as not to move -1 beyond 0
+	 * This test will test shifting a range with a positive value for delta that is small enough so as not to move -1 beyond 0
 	 * Expected output is a new range from (-0.5, 1.5).
 	 */
     @Test
@@ -135,8 +154,7 @@ public class RangeTest {
     	assertEquals("The lower bound should be -0.5 + -1 = -1.5",
     	        -1.5, afterShift.getLowerBound(), .000000001d);
     	assertEquals("The upper bound should be -0.5 + 1 = 0.5",
-    	        0.5, afterShift.getUpperBound(), .000000001d);
-    	
+    	        0.5, afterShift.getUpperBound(), .000000001d);	
     }
 
     /***
@@ -151,7 +169,18 @@ public class RangeTest {
                 6.0, afterShift.getUpperBound(), .000000001d);
         assertEquals("The lower bound should be 0 since no zero crossing is allowed and -1 + 5 = 4 > 0",
                 0.0, afterShift.getLowerBound(), .000000001d);
-
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3
+     * This test will test shifting when the lower bound of the range is 0 and zero-crossing is not allowed. 
+     * Expected output is a new range from (1, 4)
+     */
+    @Test
+    public void shiftWithoutZeroCrossingLowerBoundZero() {
+    	Range actual = Range.shift(new Range(0, 3), 1.0);
+    	assertEquals("The upper bound should be 3+1=4", 4, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be 0+1=1", 1, actual.getLowerBound(), .000000001d);
     }
     
         /* This test will test the method expandtoInclude where we are passing in a range and the value that must be included.
@@ -188,6 +217,19 @@ public class RangeTest {
     			1, actual.getUpperBound(), .000000001d);
     	assertEquals("The lower bound should be -1.5.",
     			-1.5, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (increase branch coverage)
+     * This test will check that expandToInclude will create a new Range object when the input is null
+     */
+    @Test
+    public void expandToIncludeStartingRangeNull() {
+    	Range actual = Range.expandToInclude(null, 4.3);
+    	assertEquals("The upper bound should be 4.3.",
+    			4.3, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be 4.3.",
+    			4.3, actual.getLowerBound(), .000000001d);
     }
 
     @After
