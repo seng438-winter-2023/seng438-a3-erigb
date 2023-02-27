@@ -673,4 +673,100 @@ public class DataUtilitiesTest {
 		Number[][] actualResult = DataUtilities.createNumberArray2D(inputArray);
 		assertArrayEquals("The array should be", expectedResult, actualResult);
 	}
+
+	@Test
+	public void testForEmptyInput() {
+		double[][] expectedResult =  {};
+		double[][] input = {};
+		double[][] actualResult = DataUtilities.clone(input);
+		assertArrayEquals("The output should be", expectedResult, actualResult);
+	}
+
+	@Test
+	public void testForASingleRowWithSingleValue() {
+		double[][] expectedResult =  { {1.0} };
+		double[][] input = { {1.0} };
+		double[][] actualResult = DataUtilities.clone(input);
+		assertArrayEquals("The output should be", expectedResult, actualResult);
+	}
+
+	@Test
+	public void testForASingleRowWithMultipleValue() {
+		double[][] expectedResult =  { {1.0, 2.1, 3.2} };
+		double[][] input = { {1.0, 2.1, 3.2} };
+		double[][] actualResult = DataUtilities.clone(input);
+		assertArrayEquals("The output should be", expectedResult, actualResult);
+	}
+
+	@Test
+	public void testForMultipleRowWithMultipleValue() {
+		double[][] expectedResult =  { {1.0, 2.1, 3.2}, {12.0, 22.1, 33.2}, {1.5, 2.5, 3.5} };
+		double[][] input = { {1.0, 2.1, 3.2}, {12.0, 22.1, 33.2}, {1.5, 2.5, 3.5} };
+		double[][] actualResult = DataUtilities.clone(input);
+		assertArrayEquals("The output should be", expectedResult, actualResult);
+	}
+
+	@Test
+	public void testForFirstArrayIsNull() {
+		double[][] a =  null;
+		double[][] b = {{6, 2, 5}, {2.1, 1.2, 3.3}};
+		boolean result = DataUtilities.equal(a, b);
+		assertFalse(result);
+	}
+
+	@Test
+	public void testForSecondArrayIsNull() {
+		double[][] a =  {{6, 2, 5}, {2.1, 1.2, 3.3}};
+		double[][] b = null;
+		boolean result = DataUtilities.equal(a, b);
+		assertFalse(result);
+	}
+
+	@Test
+	public void testForBothArraysNull() {
+		double[][] a =  null;
+		double[][] b = null;
+		boolean result = DataUtilities.equal(a, b);
+		assertTrue(result);
+	}
+
+	@Test
+	public void testForTwoEqualArray() {
+		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
+		double[][] b = {{1, 2, 3}, {1.1, 2.2, 3.3}};
+		boolean result = DataUtilities.equal(a, b);
+		assertTrue(result);
+	}
+
+	@Test
+	public void testForTwoDifferentArray() {
+		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
+		double[][] b = {{6, 2, 5}, {2.1, 1.2, 3.3}};
+		boolean result = DataUtilities.equal(a, b);
+		assertFalse(result);
+	}
+
+	@Test
+	public void testForArrayFirstRowIsSame() {
+		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
+		double[][] b = {{1, 2, 3}, {2.1, 1.2, 3.3}};
+		boolean result = DataUtilities.equal(a, b);
+		assertFalse(result);
+	}
+
+	@Test
+	public void testForArraySecondRowIsSame() {
+		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
+		double[][] b = {{6, 2, 5}, {2.1, 1.2, 3.3}};
+		boolean result = DataUtilities.equal(a, b);
+		assertFalse(result);
+	}
+
+	@Test
+	public void testForDifferntArrayLength() {
+		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
+		double[][] b = {{6, 2, 5}};
+		boolean result = DataUtilities.equal(a, b);
+		assertFalse(result);
+	}
 }
