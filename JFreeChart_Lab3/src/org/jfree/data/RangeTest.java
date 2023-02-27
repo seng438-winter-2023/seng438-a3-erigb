@@ -18,6 +18,20 @@ public class RangeTest {
     	NaNRange = new Range (Double.NaN, Double.NaN);
     }
 
+    /**
+     * NEW FOR ASSIGNMENT 3
+     * Test that the constructor will throw an IllegalArgumentException when the upper bound is less than the lower bound
+     */
+    @Test
+    public void constructorThrowsExceptionWhenValuesAreReversed() {
+		try {
+			Range invalidRange = new Range(5, 2);
+			fail("An exception should be thrown!");
+		} catch (Exception exception) {
+			assertEquals("The exception thrown type is IllegalArgumentException", IllegalArgumentException.class,
+					exception.getClass());
+		}
+    }
 
     /***
      * This test will check that the getLength function returns the correct value.
@@ -27,6 +41,25 @@ public class RangeTest {
     public void lengthShouldBeTwo() {
         assertEquals("The length of Range from -1 to 1 should be 2",
         		2, exampleRange.getLength(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This will check that the getCentralValue method returns the correct value
+     */
+    @Test
+    public void getCentralValueShouldBeZero() {
+    	assertEquals("The central value of the Range (-1, 1) is 0", 0, exampleRange.getCentralValue(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This will check that the toString method returns the correct conversion
+     */
+    @Test
+    public void toStringValidRange() {
+    	String s = "Range[-1.0,1.0]";
+    	assertEquals("toString() should convert Range to a String", s, exampleRange.toString());
     }
     
     /***
@@ -369,6 +402,35 @@ public class RangeTest {
     @Test
     public void combineIgnoringNaNBothNaNRanges() {
     	assertNull("Combining a null range and a NaN range should return a null range.", Range.combineIgnoringNaN(NaNRange, NaNRange));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that equals returns false when comparing to a different object type
+     */
+    @Test
+    public void equalsIsFalseWithDifferentObject() {
+    	assertFalse("Range is not equal to null", exampleRange.equals(null));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that equals returns false when comparing with a different lower bound
+     */
+    @Test
+    public void equalsIsFalseWithDifferentLowerRange() {
+    	Range r2 = new Range(0, 1);
+    	assertFalse("Ranges are not equal", exampleRange.equals(r2));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that equals returns false when comparing with a different upper bound
+     */
+    @Test
+    public void equalsIsFalseWithDifferentUpperRange() {
+    	Range r2 = new Range(-1, 10);
+    	assertFalse("Ranges are not equal", exampleRange.equals(r2));
     }
 
     @After
