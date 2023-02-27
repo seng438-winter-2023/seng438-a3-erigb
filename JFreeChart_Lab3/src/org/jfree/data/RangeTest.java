@@ -6,6 +6,7 @@ import org.junit.*;
 
 public class RangeTest {
     private Range exampleRange;
+    private Range NaNRange;
 
     @BeforeClass public static void setUpBeforeClass() throws Exception {
     }
@@ -14,6 +15,7 @@ public class RangeTest {
     @Before
     public void setUp() throws Exception { 
     	exampleRange = new Range(-1, 1);
+    	NaNRange = new Range (Double.NaN, Double.NaN);
     }
 
 
@@ -242,6 +244,131 @@ public class RangeTest {
     			4.3, actual.getUpperBound(), .000000001d);
     	assertEquals("The lower bound should be 4.3.",
     			4.3, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve method coverage)
+     * This test will check that the combine method returns a null range when both input ranges are null
+     */
+    @Test
+    public void combineTwoNullRanges() {
+    	assertNull("Combining two null ranges should return a null range.", Range.combine(null, null));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combine method returns range1 when the second input range is null
+     */
+    @Test
+    public void combineSecondRangeNull() {
+    	assertEquals("Combining with one null range should return the original range", exampleRange, Range.combine(exampleRange, null));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combine method returns the correct range when the input ranges overlap
+     */
+    @Test
+    public void combineTwoOverlappingRanges() {
+    	Range r2 = new Range(0, 4);
+    	Range actual = Range.combine(exampleRange, r2);
+
+    	assertEquals("The upper bound should be 4", 4, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -1", -1, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combine method returns the correct range when the input ranges are disjoint
+     */
+    @Test
+    public void combineTwoDisjointRanges() {
+    	Range r2 = new Range(-3, -2);
+    	Range actual = Range.combine(exampleRange, r2);
+
+    	assertEquals("The upper bound should be 1", 1, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -3", -3, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve method coverage)
+     * This test will check that the combineIgnoringNaN method returns a null range when both input ranges are null
+     */
+    @Test
+    public void combineIgnoringNaNTwoNullRanges() {
+    	assertNull("Combining two null ranges should return a null range.", Range.combineIgnoringNaN(null, null));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns a null range when the first input range is null
+     * and the second is a NaNRange
+     */
+    @Test
+    public void combineIgnoringNaNRange2isNaNRange() {
+    	assertNull("Combining a null range and a NaN range should return a null range.", Range.combineIgnoringNaN(null, NaNRange));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns range2 when the first input range is null
+     */
+    @Test
+    public void combineIgnoringNaNRange1IsNull() {
+    	assertEquals("Combining with one null range should return the original range", exampleRange, Range.combine(null, exampleRange));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns range1 when the second input range is null
+     */
+    @Test
+    public void combineIgnoringNaNSecondRangeNull() {
+    	assertEquals("Combining with one null range should return the original range", exampleRange, Range.combineIgnoringNaN(exampleRange, null));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns null when one range is NaN and the other is null
+     */
+    @Test
+    public void combineIgnoringNaNFirstRangeNaNSecondRangeNull() {
+    	assertNull("Combining a null range and a NaN range should return a null range.", Range.combineIgnoringNaN(NaNRange, null));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns the correct range when the input ranges overlap
+     */
+    @Test
+    public void combineIgnoringNaNTwoOverlappingRanges() {
+    	Range r2 = new Range(0, 4);
+    	Range actual = Range.combineIgnoringNaN(exampleRange, r2);
+
+    	assertEquals("The upper bound should be 4", 4, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -1", -1, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns the correct range when the input ranges are disjoint
+     */
+    @Test
+    public void combineIgnoringNaNTwoDisjointRanges() {
+    	Range r2 = new Range(-3, -2);
+    	Range actual = Range.combineIgnoringNaN(exampleRange, r2);
+
+    	assertEquals("The upper bound should be 1", 1, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -3", -3, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that the combineIgnoringNaN method returns a null range when the input ranges are NaN
+     */
+    @Test
+    public void combineIgnoringNaNBothNaNRanges() {
+    	assertNull("Combining a null range and a NaN range should return a null range.", Range.combineIgnoringNaN(NaNRange, NaNRange));
     }
 
     @After
