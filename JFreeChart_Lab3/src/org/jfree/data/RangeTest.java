@@ -164,6 +164,16 @@ public class RangeTest {
     	assertFalse("The Range (0, -0.5) does not intersect the current Range (-1, 1)", exampleRange.intersects(0, -0.5));
     }
     
+    /**
+     * NEW FOR ASSIGNMENT 3 (increase statement coverage)
+     * This test will check that intersects is correct when the ranges overlap
+     */
+    @Test
+    public void intersectsWithAnotherRange() {
+    	Range r2 = new Range (0, 7);
+    	assertTrue("The ranges (-1, 1) and (0, 7) intersect", exampleRange.intersects(r2));
+    }
+    
     /***
 	 * This test will test shifting a range with a positive value for delta that is small enough so as not to move -1 beyond 0
 	 * Expected output is a new range from (-0.5, 1.5).
@@ -431,6 +441,94 @@ public class RangeTest {
     public void equalsIsFalseWithDifferentUpperRange() {
     	Range r2 = new Range(-1, 10);
     	assertFalse("Ranges are not equal", exampleRange.equals(r2));
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that expand works as intended when both upper and lower margin are positive
+     */
+    @Test
+    public void expandWithValidRange() {
+    	Range actual = Range.expand(exampleRange, 1, 1);
+
+    	assertEquals("The upper bound should be 3", 3, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -3", -3, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that expand works as intended when the input factors make lower > upper
+     */
+    @Test
+    public void expandWithNewLowerGreaterThanNewUpper() {
+    	Range actual = Range.expand(exampleRange, -2, 0);
+
+    	assertEquals("The upper bound should be 2", 2, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be 2", 2, actual.getLowerBound(), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve branch coverage)
+     * This test will check that scale returns the correct value when the factor is greater than 0
+     */
+    @Test
+    public void scaleWithValidArgs() {
+    	Range actual = Range.scale(exampleRange, 1.5);
+
+    	assertEquals("The upper bound should be 1.5", 1.5, actual.getUpperBound(), .000000001d);
+    	assertEquals("The lower bound should be -1.5", -1.5, actual.getLowerBound(), .000000001d);
+    }
+    
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that scale throws the correct exception when the factor is negative
+     */
+    @Test
+    public void scaleWithNegativeFactor() {
+    	try {
+			Range.scale(exampleRange, -1);
+			fail("An exception should be thrown!");
+		} catch (Exception exception) {
+			assertEquals("The exception thrown type is IllegalArgumentException", IllegalArgumentException.class,
+					exception.getClass());
+		}
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that constrains returns the exact value when it is contained in the range
+     */
+    @Test
+    public void constrainAlreadyContainsValue() {
+    	assertEquals("The range contains value 0", 0, exampleRange.constrain(0), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that the upper bound is returned when the input is above the upper bound of the range
+     */
+    @Test
+    public void constrainValueAboveRange() {
+    	assertEquals("The closest value in the range to 6 is 1", 1, exampleRange.constrain(6), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will check that the lower bound is returned when the input is below the lower bound of the range
+     */
+    @Test
+    public void constrainValueBelowRange() {
+    	assertEquals("The closest value in the range to -2.3 is -1", -1, exampleRange.constrain(-2.3), .000000001d);
+    }
+    
+    /**
+     * NEW FOR ASSIGNMENT 3 (improve statement coverage)
+     * This test will ensure hashCode returns the expected value
+     */
+    @Test
+    public void hashCodeReturnsCorrectValue() {
+    	assertEquals("The hash code is incorrect", -31457280, exampleRange.hashCode());
     }
 
     @After
