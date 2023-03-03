@@ -720,6 +720,9 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The array should be", expectedResult, actualResult);
 	}
 
+	/* This test will test the method clone where both the arguments are empty
+	 * Expected output should be the input, {}
+	 */
 	@Test
 	public void testForEmptyInput() {
 		double[][] expectedResult =  {};
@@ -728,6 +731,9 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
+	/* This test will test the method clone where the argument is a single row with a single value
+	 * Expected output should be the input, {{1.0}}
+	 */
 	@Test
 	public void testForASingleRowWithSingleValue() {
 		double[][] expectedResult =  { {1.0} };
@@ -736,6 +742,9 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
+	/* This test will test the method clone where the argument is a single row with multiple value
+	 * Expected output should be the input, {{1.0, 2.1, 3.2}}
+	 */
 	@Test
 	public void testForASingleRowWithMultipleValue() {
 		double[][] expectedResult =  { {1.0, 2.1, 3.2} };
@@ -744,6 +753,9 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
+	/* This test will test the method clone where the argument is multiple row with multiple value
+	 * Expected output should be the input, {{1.0, 2.1, 3.2}, {12.0, 22.1, 33.2}, {1.5, 2.5, 3.5}}
+	 */
 	@Test
 	public void testForMultipleRowWithMultipleValue() {
 		double[][] expectedResult =  { {1.0, 2.1, 3.2}, {12.0, 22.1, 33.2}, {1.5, 2.5, 3.5} };
@@ -752,6 +764,9 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
+	/* This test will test the method equal where first array is null but the second one is not.
+	 * Expected output should be the false.
+	 */
 	@Test
 	public void testForFirstArrayIsNull() {
 		double[][] a =  null;
@@ -760,6 +775,9 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
+	/* This test will test the method equal where second array is null but the first one is not.
+	 * Expected output should be the false.
+	 */
 	@Test
 	public void testForSecondArrayIsNull() {
 		double[][] a =  {{6, 2, 5}, {2.1, 1.2, 3.3}};
@@ -768,6 +786,9 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
+	/* This test will test the method equal where both the arrays are null
+	 * Expected output should be the true.
+	 */
 	@Test
 	public void testForBothArraysNull() {
 		double[][] a =  null;
@@ -776,6 +797,9 @@ public class DataUtilitiesTest {
 		assertTrue(result);
 	}
 
+	/* This test will test the method equal where both the arrays have the same values.
+	 * Expected output should be the true.
+	 */
 	@Test
 	public void testForTwoEqualArray() {
 		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
@@ -784,6 +808,9 @@ public class DataUtilitiesTest {
 		assertTrue(result);
 	}
 
+	/* This test will test the method equal where the arrays have different values
+	 * Expected output should be the false.
+	 */
 	@Test
 	public void testForTwoDifferentArray() {
 		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
@@ -792,6 +819,9 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
+	/* This test will test the method equal where the arrays have different values
+	 * Expected output should be the false.
+	 */
 	@Test
 	public void testForArrayFirstRowIsSame() {
 		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
@@ -800,6 +830,9 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
+	/* This test will test the method equal where the arrays have different values
+	 * Expected output should be the false.
+	 */
 	@Test
 	public void testForArraySecondRowIsSame() {
 		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
@@ -808,6 +841,9 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
+	/* This test will test the method equal where the arrays have different length
+	 * Expected output should be the false.
+	 */
 	@Test
 	public void testForDifferntArrayLength() {
 		double[][] a =  {{1, 2, 3}, {1.1, 2.2, 3.3}};
