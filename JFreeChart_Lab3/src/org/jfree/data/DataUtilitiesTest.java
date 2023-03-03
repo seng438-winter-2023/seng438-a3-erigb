@@ -49,6 +49,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateColumnTotal by using a 1 column, 2 row Values2D object with all valid rows.
 	 * Expected output is 10
 	 */
@@ -96,6 +97,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will check calculateColumnTotal by using a 1 column, 2 row Values2D object using all valid rows.
 	 * This object only contains 0 values.
 	 * Expected output is 0
@@ -138,6 +140,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateColumnTotal by using an empty Values2D using only valid rows.
 	 * Expected output is 0.
 	 */
@@ -179,6 +182,7 @@ public class DataUtilitiesTest {
 	}
 
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateRowTotal by using a properly made Values2D using only valid columns.
 	 * Expected output is 10.
 	 */
@@ -224,6 +228,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateRowTotal by using a properly made Values2D with invalid inputs using all valid columns
 	 * Expected output is 0.
 	 */
@@ -265,6 +270,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateRowTotal by using an empty Values2D using only valid columns.
 	 * Expected output is 0.
 	 */
@@ -284,6 +290,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateColumnTotal by using a properly made Values2D with two values using only one valid row.
 	 * Expected output is 7.5.
 	 */
@@ -307,6 +314,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateRowTotal by using a properly made Values2D with two values using only one valid row.
 	 * Expected output is 7.5.
 	 */
@@ -352,6 +360,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateColumnTotal by using a properly made Values2D with a null value using only valid row.
 	 * Expected output is 7.5.
 	 */
@@ -397,6 +406,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateRowTotal by using a properly made Values2D with a null value using only valid row.
 	 * Expected output is 7.5.
 	 */
@@ -420,6 +430,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateColumnTotal by using a null Values2D.
 	 * Expected output is IllegalArgumentException.class.
 	 */
@@ -436,6 +447,7 @@ public class DataUtilitiesTest {
 	}
 	
 	/***
+	 * NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	 * This test will test calculateRowTotal by using a null Values2D.
 	 * Expected output is IllegalArgumentException.class.
 	 */
@@ -497,6 +509,8 @@ public class DataUtilitiesTest {
 		assertEquals("The percentage for index \"3\" is (5+9+2+4)/20 = 1.0", 1.0,
 				resultValues.getValue(2).doubleValue(), .000000001d);
 	}
+	
+	// NEW FOR ASSIGNMENT 3 (improve branch coverage)
 	// the following tests the method getCumulativePercentages in a case where data passed to it had only negative values
 	// since the documentation gives the range of percentages from 0.0-1.0
 	@Test
@@ -720,7 +734,8 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The array should be", expectedResult, actualResult);
 	}
 
-	/* This test will test the method clone where both the arguments are empty
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method clone where both the arguments are empty
 	 * Expected output should be the input, {}
 	 */
 	@Test
@@ -731,7 +746,8 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
-	/* This test will test the method clone where the argument is a single row with a single value
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method clone where the argument is a single row with a single value
 	 * Expected output should be the input, {{1.0}}
 	 */
 	@Test
@@ -742,7 +758,8 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
-	/* This test will test the method clone where the argument is a single row with multiple value
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method clone where the argument is a single row with multiple value
 	 * Expected output should be the input, {{1.0, 2.1, 3.2}}
 	 */
 	@Test
@@ -753,7 +770,8 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
-	/* This test will test the method clone where the argument is multiple row with multiple value
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method clone where the argument is multiple row with multiple value
 	 * Expected output should be the input, {{1.0, 2.1, 3.2}, {12.0, 22.1, 33.2}, {1.5, 2.5, 3.5}}
 	 */
 	@Test
@@ -764,7 +782,8 @@ public class DataUtilitiesTest {
 		assertArrayEquals("The output should be", expectedResult, actualResult);
 	}
 
-	/* This test will test the method equal where first array is null but the second one is not.
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where first array is null but the second one is not.
 	 * Expected output should be the false.
 	 */
 	@Test
@@ -775,7 +794,8 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
-	/* This test will test the method equal where second array is null but the first one is not.
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where second array is null but the first one is not.
 	 * Expected output should be the false.
 	 */
 	@Test
@@ -786,7 +806,8 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
-	/* This test will test the method equal where both the arrays are null
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where both the arrays are null
 	 * Expected output should be the true.
 	 */
 	@Test
@@ -797,7 +818,8 @@ public class DataUtilitiesTest {
 		assertTrue(result);
 	}
 
-	/* This test will test the method equal where both the arrays have the same values.
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where both the arrays have the same values.
 	 * Expected output should be the true.
 	 */
 	@Test
@@ -808,7 +830,8 @@ public class DataUtilitiesTest {
 		assertTrue(result);
 	}
 
-	/* This test will test the method equal where the arrays have different values
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where the arrays have different values
 	 * Expected output should be the false.
 	 */
 	@Test
@@ -819,7 +842,8 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
-	/* This test will test the method equal where the arrays have different values
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where the arrays have different values
 	 * Expected output should be the false.
 	 */
 	@Test
@@ -830,7 +854,8 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
-	/* This test will test the method equal where the arrays have different values
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where the arrays have different values
 	 * Expected output should be the false.
 	 */
 	@Test
@@ -841,7 +866,8 @@ public class DataUtilitiesTest {
 		assertFalse(result);
 	}
 
-	/* This test will test the method equal where the arrays have different length
+	/* NEW FOR ASSIGNMENT 3 (improve branch coverage)
+	 * This test will test the method equal where the arrays have different length
 	 * Expected output should be the false.
 	 */
 	@Test
