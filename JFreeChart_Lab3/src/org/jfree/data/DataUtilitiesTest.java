@@ -239,7 +239,7 @@ public class DataUtilitiesTest {
 				one(values).getValue(0, 0);
 				will(returnValue(10));
 				one(values).getValue(0, 10);
-				will(throwException(new IndexOutOfBoundsException("Index 10 is out of bound for Column Count of 1")));
+				will(null);
 			}
 		});
 		double result = DataUtilities.calculateRowTotal(values, 0, validCols);
@@ -495,6 +495,52 @@ public class DataUtilitiesTest {
 		assertEquals("The percentage for index \"2\" is (5+9+2)/20 = 0.8", 0.8, resultValues.getValue(2).doubleValue(),
 				.000000001d);
 		assertEquals("The percentage for index \"3\" is (5+9+2+4)/20 = 1.0", 1.0,
+				resultValues.getValue(2).doubleValue(), .000000001d);
+	}
+	// the following tests the method getCumulativePercentages in a case where data passed to it had only negative values
+	// since the documentation gives the range of percentages from 0.0-1.0
+	@Test
+	public void getCumulativePercentagesForPositiveDataWithANullDataPoint() {
+		Mockery keyedMock = new Mockery();
+		keyedValuesList = keyedMock.mock(KeyedValues.class);
+		// the call to cumulative percentages uses the following getters multiple times depending on length on KeyedValues object
+		keyedMock.checking(new Expectations() {
+			{
+				atLeast(1).of(keyedValuesList).getItemCount();
+				will(returnValue(4));
+
+				atLeast(1).of(keyedValuesList).getValue(0);
+				will(returnValue(5));
+				atLeast(1).of(keyedValuesList).getValue(1);
+				will(returnValue(9));
+				atLeast(1).of(keyedValuesList).getValue(2);
+				will(returnValue(2));
+				atLeast(1).of(keyedValuesList).getValue(3);
+				will(returnValue(null));
+				one(keyedValuesList).getKey(0);
+				will(returnValue(1));
+				one(keyedValuesList).getKey(1);
+				will(returnValue(2));
+				one(keyedValuesList).getKey(2);
+				will(returnValue(15));
+				one(keyedValuesList).getKey(3);
+				will(returnValue(18));
+
+			}
+		});
+
+		KeyedValues resultValues = DataUtilities.getCumulativePercentages(keyedValuesList);
+		assertEquals("The key in index \"0\" is 1", 1, resultValues.getKey(0));
+		assertEquals("The key in index \"1\" is 2", 2, resultValues.getKey(1));
+		assertEquals("The key in index \"2\" is 15", 15, resultValues.getKey(2));
+		assertEquals("The key in index \"3\" is null", 18, resultValues.getKey(3));
+		assertEquals("The percentage for index \"0\" is 5/16 = 0.3125", 0.3125, resultValues.getValue(0).doubleValue(),
+				.000000001d);
+		assertEquals("The percentage for index \"1\" is (5+9)/16 = 0.875 ", 0.875, resultValues.getValue(1).doubleValue(),
+				.000000001d);
+		assertEquals("The percentage for index \"2\" is (5+9+2)/16 = 1.0", 1.0, resultValues.getValue(2).doubleValue(),
+				.000000001d);
+		assertEquals("The percentage for index \"3\" is (5+9+2+0)/16 = 1.0", 1.0,
 				resultValues.getValue(2).doubleValue(), .000000001d);
 	}
 
